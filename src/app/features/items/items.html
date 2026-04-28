@@ -1,0 +1,38 @@
+<h1>Personas</h1>
+
+@if (loading) {
+  <p>Cargando...</p>
+}
+
+@if (!loading) {
+  <ul>
+    @for (item of filteredItems; track item.login.uuid) {
+      <li>
+            <img [src]="item.picture.medium" alt="foto" width="80" />
+
+            <p><strong>{{ item.name.first }} {{ item.name.last }}</strong></p>
+            <p>Email: {{ item.email }}</p>
+            <p>Edad: {{ item.dob.age }}</p>
+            <p>Teléfono: {{ item.phone }}</p>
+            <p>
+            {{ item.location.country }} - 
+            {{ item.location.state }} - 
+            {{ item.location.city }}
+            </p>
+            
+            <hr />
+            </li>
+        }
+  </ul>
+}
+
+<input 
+  type="text"
+  placeholder="Buscar..."
+  [(ngModel)]="searchText"
+  (input)="filterItems()"
+/>
+
+<button (click)="sortByName()">
+  Ordenar por nombre
+</button>
