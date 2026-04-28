@@ -1,5 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-configuracion',
@@ -10,6 +12,14 @@ import { Router } from '@angular/router';
 })
 export class Configuracion {
 private router = inject(Router);
+private platformId = inject(PLATFORM_ID);
+
+userAgent = '';
+ngOnInit() {
+  if (isPlatformBrowser(this.platformId)) {
+    this.userAgent = navigator.userAgent;
+  }
+}
 
 logout() {
   const confirmacion = confirm('¿Seguro que querés cerrar sesión?');
