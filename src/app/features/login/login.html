@@ -1,0 +1,9 @@
+<h1>Login</h1>
+
+<button (click)="login()" [disabled]="loading">
+  Iniciar sesión
+</button>
+
+@if (loading) {
+    <p>Cargando...</p>
+}
