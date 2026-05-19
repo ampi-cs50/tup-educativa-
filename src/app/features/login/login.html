@@ -13,17 +13,13 @@
     <button (click)="login()" [disabled]="loading">
 
       @if (loading) {
-
         <span class="spinner"></span>
-        Verificando...
-
+           Iniciando sesión...
       } @else {
+        Iniciar sesión con Google
+        }
 
-        Iniciar sesión
-
-      }
-
-    </button>
+</button>
 
   </div>
 

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
+import { AuthService } from '../../core/auth.service';
+
 @Component({
   selector: 'app-configuracion',
   standalone: true,
@@ -11,18 +13,11 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './configuracion.css',
 })
 export class Configuracion {
-
   private router = inject(Router);
   private platformId = inject(PLATFORM_ID);
+  authService = inject(AuthService);
 
   userAgent = '';
-
-  user = {
-    name: 'Ignacio Echave',
-    email: 'ignacio@email.com',
-    role: 'Administrador',
-    image: 'https://randomuser.me/api/portraits/men/32.jpg'
-  };
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -30,11 +25,11 @@ export class Configuracion {
     }
   }
 
-  logout() {
+  async logout() {
     const confirmacion = confirm('¿Seguro que querés cerrar sesión?');
 
     if (confirmacion) {
-      sessionStorage.removeItem('auth');
+      await this.authService.logout();
       this.router.navigate(['/login']);
     }
   }

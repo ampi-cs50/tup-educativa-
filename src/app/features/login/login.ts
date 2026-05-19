@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { AuthService } from '../../core/auth.service';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -11,14 +13,22 @@ import { Router } from '@angular/router';
 export class Login {
   loading = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
-  login() {
+  async login() {
     this.loading = true;
 
-    setTimeout(() => {
-      sessionStorage.setItem('auth', 'true');
-      this.router.navigate(['/items']);
-    }, 2000);
+    try {
+      const result = await this.authService.loginWithGoogle();
+      console.log('Usuario logueado:', result.user);
+
+      await this.router.navigate(['/items']);
+    } catch (error) {
+      console.error('Error al iniciar sesión con Google', error);
+      this.loading = false;
+    }
   }
 }
